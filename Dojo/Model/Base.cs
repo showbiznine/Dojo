@@ -94,5 +94,8 @@ namespace Dojo.Model
             public DateTime end { get; set; }
         }
 
+
+
+
     }
 }

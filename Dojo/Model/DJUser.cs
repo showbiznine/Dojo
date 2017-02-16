@@ -1,5 +1,10 @@
 ﻿namespace Dojo.Model
 {
+    public class DJUserRoot
+    {
+        public DJUser user { get; set; }
+    }
+
     public class DJUser
     {
         public string id { get; set; }

@@ -17,7 +17,7 @@
         public string ticket_price { get; set; }
         public string ticket_url { get; set; }
         public string venue_name { get; set; }
-        public DJTimes times { get; set; }
+        //public DJTimes times { get; set; }
         public object[] collection_ids { get; set; }
         public string listingContext_id { get; set; }
         public string slug { get; set; }

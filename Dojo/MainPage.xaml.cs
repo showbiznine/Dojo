@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Dojo.Services;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -25,6 +27,15 @@ namespace Dojo
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private async void btnTemp_Click(object sender, RoutedEventArgs e)
+        {
+            var loc = new Geolocator();
+            var c = await loc.GetGeopositionAsync();
+            var u = await DataService.LoginTemp();
+            var s = await DataService.SetLocation(c.Coordinate.Point.Position.Latitude, c.Coordinate.Point.Position.Longitude);
+            await DataService.GetCategories();
         }
     }
 }
