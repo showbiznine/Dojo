@@ -108,6 +108,7 @@
     <Compile Include="Model\DJContentType.cs" />
     <Compile Include="Model\RemoteSettings.cs" />
     <Compile Include="Services\AppDataService.cs" />
+    <Compile Include="Services\CalendarService.cs" />
     <Compile Include="ViewModels\ListingViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
