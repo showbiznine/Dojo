@@ -9,7 +9,7 @@
         public bool is_big { get; set; }
         //public DJTime time { get; set; }
         public DJListing listing { get; set; }
-        //public Media1 media { get; set; }
+        public DJMedia media { get; set; }
         public DJStory story { get; set; }
     }
 }

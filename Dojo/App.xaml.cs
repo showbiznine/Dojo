@@ -1,12 +1,19 @@
-﻿using System;
+﻿using Dojo.ViewModels;
+using Dojo.Views;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
+using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,6 +29,9 @@ namespace Dojo
     /// </summary>
     sealed partial class App : Application
     {
+
+        public static ViewModelLocator ViewModelLocator;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -39,12 +49,40 @@ namespace Dojo
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
+            ViewModelLocator = (ViewModelLocator)Current.Resources["Locator"];
+
+            #region Custom Title/Status Bar
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                var sb = StatusBar.GetForCurrentView();
+                if (sb != null)
+                {
+                    sb.BackgroundColor = Colors.Black;
+                    sb.ForegroundColor = Colors.White;
+                }
             }
-#endif
+
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.ApplicationView"))
+            {
+                var tb = ApplicationView.GetForCurrentView().TitleBar;
+                ApplicationView.GetForCurrentView().Title = "Dojo [BETA]";
+                if (tb != null)
+                {
+                    tb.BackgroundColor = 
+                        tb.ButtonPressedBackgroundColor =
+                        tb.ButtonBackgroundColor = 
+                        Colors.Black;
+                    tb.ForegroundColor =
+                        tb.ButtonForegroundColor = 
+                        Colors.White;
+
+                }
+            }
+            
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = false; 
+            #endregion
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -54,7 +92,13 @@ namespace Dojo
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
+                rootFrame.Navigated += OnRootFrameNavigated;
                 rootFrame.NavigationFailed += OnNavigationFailed;
+                SystemNavigationManager.GetForCurrentView().BackRequested += (s, args) =>
+                {
+                    rootFrame.GoBack();
+                    args.Handled = true;
+                };
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -77,6 +121,15 @@ namespace Dojo
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
+        {
+            if (((Frame)sender).CanGoBack)
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            else
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+
         }
 
         /// <summary>

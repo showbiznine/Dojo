@@ -1,0 +1,66 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dojo.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    x:Class="Dojo.Views.ListingPage"
+    mc:Ignorable="d"
+    DataContext="{Binding Listing, Source={StaticResource Locator}}">
+    
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="abbShare" Icon="ReShare" Label="AppBarButton"/>
+            <AppBarButton x:Name="abbCollection" Icon="OutlineStar" Label="AppBarButton"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer VerticalContentAlignment="Top" HorizontalContentAlignment="Stretch" VerticalAlignment="Top" Padding="0,0,0,36">
+            <StackPanel>
+                <Image x:Name="imgHeader"
+                       Source="{x:Bind Vm.CurrentListing.medias[0].link}"/>
+                <StackPanel x:Name="grdTitle"
+                            Padding="12">
+                    <TextBlock Text="{x:Bind Vm.CurrentListing.name}"
+                               FontSize="32"
+                               FontWeight="ExtraLight"/>
+                    <TextBlock Text="{x:Bind Vm.CurrentListing.venue_name}"
+                               FontSize="18"
+                               FontWeight="Normal"/>
+                    <TextBlock Text="{x:Bind Vm.CurrentListing.subtitle}"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Opacity=".7"/>
+                </StackPanel>
+                <Grid x:Name="grdDetails">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Calculate Diatance"
+                               Grid.Column="0"/>
+                    <TextBlock Text="{x:Bind Vm.CurrentListing.price_rating}"
+                               Grid.Column="1"/>
+                    <TextBlock Text="{x:Bind Vm.CurrentListing.station}"
+                               Grid.Column="2"
+                               HorizontalAlignment="Right"/>
+                </Grid>
+                <TextBlock x:Name="lblRating" TextWrapping="Wrap" Text="{x:Bind Vm.CurrentListing.rating}"/>
+                <TextBlock x:Name="lblDescription" TextWrapping="Wrap" Text="{x:Bind Vm.CurrentListing.tip.text}"/>
+                <Maps:MapControl x:Name="mapLocation"/>
+                <StackPanel x:Name="stkWebPhone" Height="100">
+                    <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Details"/>
+                </StackPanel>
+                <ListView x:Name="lstHours" Header="Hours"/>
+                <Button x:Name="button" Content="Suggest an edit" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,48,0,0" Background="#19FFFFFF" Padding="36,4"/>
+            </StackPanel>
+        </ScrollViewer>
+
+    </Grid>
+</Page>

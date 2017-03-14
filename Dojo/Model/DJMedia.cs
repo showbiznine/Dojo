@@ -1,4 +1,6 @@
-﻿namespace Dojo.Model
+﻿using Windows.UI.Xaml;
+
+namespace Dojo.Model
 {
     public class DJMedia
     {
@@ -13,5 +15,11 @@
         public bool front_image { get; set; }
         public DJVersions versions { get; set; }
         public DJPreview preview { get; set; }
+
+        public double CalculateHeight(float aspect_ratio)
+        {
+            var window_width = Window.Current.Bounds.Width;
+            return window_width * 1 / aspect_ratio;
+        }
     }
 }

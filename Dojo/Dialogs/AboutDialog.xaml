@@ -1,0 +1,31 @@
+﻿<ContentDialog
+    x:Class="Dojo.Dialogs.AboutDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dojo.Dialogs"
+    xmlns:Toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="About"
+    PrimaryButtonText="Close"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+
+    <Grid>
+        <StackPanel 
+                    Margin="0,12,0,0">
+            <Toolkit:HeaderedTextBlock x:Name="lblVersion" 
+                                       Header="Version"
+                                       Text="Test" 
+                                       HorizontalAlignment="Stretch" 
+                                       VerticalContentAlignment="Top"
+                                       Orientation="Vertical"/>
+            <Toolkit:HeaderedTextBlock Header="What's new"
+                                       Text="Test" 
+                                       HorizontalAlignment="Stretch" 
+                                       VerticalContentAlignment="Top"
+                                       Orientation="Vertical"
+                                       Margin="0,12,0,0"/>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

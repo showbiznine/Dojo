@@ -28,7 +28,7 @@
         public bool recently_added { get; set; }
         public string context_id { get; set; }
         public string mongo_id { get; set; }
-        public int price_rating { get; set; }
+        public int? price_rating { get; set; }
         public DJStamp stamp { get; set; }
     }
 

@@ -1,0 +1,101 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:Dojo.Views"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:Controls="using:Dojo.Controls"
+      xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
+      xmlns:Converters="using:Dojo.Converters"
+      xmlns:Model="using:Dojo.Model"
+      x:Class="Dojo.Views.StoryPage"
+      mc:Ignorable="d"
+      DataContext="{Binding Story, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <toolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <Converters:ContentTypeTemplateSelector x:Key="ContentTemplateSelector"
+                                                HeaderImageTemplate="{StaticResource HeaderImageTemplate}"
+                                                HeaderTextTemplate="{StaticResource HeaderTextTemplate}"
+                                                SeperatorTextTemplate="{StaticResource SeperatorTextTemplate}"
+                                                IdeaImageTemplate="{StaticResource IdeaImageTemplate}"
+                                                SpotifyPreviewTemplate="{StaticResource SpotifyPreviewTemplate}"
+                                                UnknownContentTypeTemplate="{StaticResource UnknownContentTypeTemplate}"/>
+        
+        <DataTemplate x:Key="HeaderImageTemplate"
+                      x:DataType="Model:DJContent">
+            <MediaElement x:Name="imgHeader"
+                          Source="{x:Bind medias[0].link}"
+                          Height="{x:Bind medias[0].CalculateHeight(medias[0].aspect_ratio)}"
+                          Stretch="UniformToFill"
+                          PosterSource="{x:Bind medias[0].link}"
+                          HorizontalAlignment="Center"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HeaderTextTemplate"
+                      x:DataType="Model:DJContent">
+            <Grid Padding="12"
+                  HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" 
+                           Text="{x:Bind text.text}" 
+                           FontSize="{x:Bind text.size}"
+                           Foreground="{x:Bind text.colour}"
+                           Tag="{x:Bind text.text_type}"
+                           TextWrapping="WrapWholeWords"
+                           VerticalAlignment="Center"/>
+                <Ellipse Height="36"
+                         Width="36"
+                         Margin="12,0,0,0"
+                         Fill="Red"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         Grid.Column="1"
+                         Visibility="{x:Bind follow_button,Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="SeperatorTextTemplate"
+                      x:DataType="Model:DJContent">
+            <TextBlock Text="{x:Bind text.text}"
+                       FontSize="{x:Bind text.size}"
+                       Foreground="{x:Bind text.colour}"
+                       Tag="{x:Bind text.text_type}"
+                       TextWrapping="WrapWholeWords" 
+                       HorizontalAlignment="Center"
+                       Padding="0,16,0,16"/>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="UnknownContentTypeTemplate"
+                      x:DataType="Model:DJContent">
+            <Rectangle Height="50"
+                       Fill="Red"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="IdeaImageTemplate"
+                      x:DataType="Model:DJContent">
+            <Image Source="{x:Bind medias[0].link}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="SpotifyPreviewTemplate"
+                      x:DataType="Model:DJContent">
+            <Rectangle Height="50"
+                       Fill="Green" />
+        </DataTemplate>
+    </Page.Resources>
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer>
+            <ListView x:Name="lstContent"
+                      ItemTemplateSelector="{StaticResource ContentTemplateSelector}"
+                      ItemsSource="{x:Bind Vm.CurrentStory.contents}"
+                      ItemContainerStyle="{StaticResource ListViewItemNoMarginStyle}"
+                      IsItemClickEnabled="True"
+                      SelectionMode="None"/>
+
+        </ScrollViewer>
+
+    </Grid>
+</Page>

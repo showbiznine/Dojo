@@ -1,0 +1,25 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dojo.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    x:Class="Dojo.Controls.IdeaDetailsControl"
+    mc:Ignorable="d"
+    d:DesignHeight="1000"
+    d:DesignWidth="400">
+
+    <StackPanel x:Name="stkStoryRoot">
+        <Maps:MapControl Height="150"/>
+        <Rectangle x:Name="btnUber" Fill="Blue" Height="82" Margin="12" RadiusX="12" RadiusY="12"/>
+        <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Details" Margin="12,0"/>
+        <TextBlock x:Name="lblWebsite" TextWrapping="Wrap" Text="{x:Bind Website}" Margin="12,0"/>
+        <TextBlock x:Name="lblPhoneNumber" TextWrapping="Wrap" Text="{x:Bind PhoneNumber}" Margin="12,0"/>
+        <TextBlock x:Name="textBlock_Copy2" TextWrapping="Wrap" Text="Dates" Margin="12,12,12,0" Padding="0"/>
+        <ListView x:Name="lstDates" Height="100" Background="Red" Margin="12,0"/>
+        <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="Tickets" Padding="0" Margin="12,12,12,0"/>
+        <TextBlock x:Name="lblTicketPrice" TextWrapping="Wrap" Text="{x:Bind TicketPrice}" Padding="0" Margin="12,12,12,0"/>
+        <Button x:Name="button" Content="Suggest an edit" HorizontalAlignment="Center" VerticalAlignment="Stretch" Margin="0,48,0,0" Padding="32,4"/>
+    </StackPanel>
+</UserControl>
